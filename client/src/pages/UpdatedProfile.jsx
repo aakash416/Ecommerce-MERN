@@ -1,35 +1,39 @@
 import React, { useContext, useState } from 'react'
-import Input from '../components/Input'
-import { register } from '../service/AuthService'
+import { storeData } from '../Context/ContextStore';
+import Input from '../components/Input';
+import { updatedprofile } from '../service/AuthService';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { storeData } from "../Context/ContextStore"
 
-const Register = () => {
-
+const UpdatedProfile = () => {
     const navgater = useNavigate();
     const store = useContext(storeData);
-    const [data, setData] = useState({ firstName: "", lastName: "", email: "", password: "", phone: "", address: "", gender: "", role: store.user, image: "" });
+    const [data, setData] = useState({ ...store.userData, password: "", token: store.token });
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(data)
-        register(data).then((res) => {
+        updatedprofile(data).then((res) => {
+            store.setUserData(res.data.updated);
             toast.success(res.data.message);
-            navgater("/login");
+            store.setIsLogin(true);
+            store.setToken(res.data.token);
+            navgater("/profile");
+
         }).catch((err) => {
             toast.error(err.response.data.message);
         })
+
+
     }
     return (
-        <div className='container mt-5'>
-            <h1>Create Account</h1>
+        <div className='container mt-2'>
+            <h1>Update Profile</h1>
             <form onSubmit={handleSubmit}>
-                <Input name={"First Name"} type={"text"} id={"firstName"} value={data.firstName} setInput={setData} />
+                <Input name={"First Name"} type={"text"} id={"firstName"} value={data.firstName} setInput={setData} required />
                 <Input name={"Last Name"} type={"text"} id={"lastName"} value={data.lastName} setInput={setData} />
-                <Input name={"email "} type={"email"} id={"email"} value={data.email} setInput={setData} />
-                <Input name={"Password"} type={"password"} id={"password"} value={data.password} setInput={setData} />
-                <Input name={"Phone Number"} type={"number"} id={"phone"} value={data.phone} setInput={setData} />
+                <Input name={"email "} type={"email"} id={"email"} value={data.email} setInput={setData} required />
+                <Input name={"Password"} type={"password"} id={"password"} value={data.password} setInput={setData} required />
+                <Input name={"Phone Number"} type={"number"} id={"phone"} value={data.phone} setInput={setData} required />
                 <label htmlFor="gender" className="form-label">
                     Gender
                 </label>
@@ -42,7 +46,7 @@ const Register = () => {
                 <Input name={"Image URL"} type={"text"} id={"image"} value={data.image} setInput={setData} />
                 <Input name={"Address"} type={"text"} id={"address"} value={data.address} setInput={setData} />
                 <button type="submit" className="btn btn-primary mt-3">
-                    Register
+                    Updat Profile
                 </button>
             </form>
 
@@ -50,4 +54,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default UpdatedProfile

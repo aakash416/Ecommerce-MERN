@@ -10,6 +10,11 @@ const login = async (data) => {
     return await axios.post(`${API}/api/users/login`, data);
 }
 
+export const updatedprofile = async (data) => {
+    return await axios.put(`${API}/api/users/update`, data);
+}
+
+
 
 const addProduct = async (data) => {
     return await axios.post(`${API}/api/product/add`, data);

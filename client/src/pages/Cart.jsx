@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 import CartProduct from '../components/CartProduct';
-import { CartData } from "../App"
+import { storeData } from "../Context/ContextStore"
 
 
 const Cart = () => {
-    const cart = useContext(CartData);
+    const cart = useContext(storeData);
     return (
         <div className='container mt-2 '>
             <table className="table">

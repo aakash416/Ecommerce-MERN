@@ -12,19 +12,13 @@ import Dashboard from './pages/Dashboard';
 import AddProduct from './pages/AddProduct';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
-import { createContext, useState } from 'react';
-
-export const CartData = createContext();
+import { Store } from './Context/ContextStore'
+import Profile from './pages/Profile';
+import UpdatedProfile from './pages/UpdatedProfile';
 
 function App() {
-
-  const [cart, setCart] = useState([]);
-  const [isLogin, setIsLogin] = useState(false);
-  const [user, setUser] = useState("user");
-
-
   return (
-    <CartData.Provider value={{ cart, setCart, isLogin, setIsLogin, user, setUser }}>
+    <Store >
       <BrowserRouter>
         <Header />
         <ToastContainer position="top-right" theme="light" />
@@ -32,6 +26,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/updatedprofile" element={<UpdatedProfile />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/add" element={<AddProduct />} />
@@ -39,7 +35,7 @@ function App() {
           <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>
-    </CartData.Provider >
+    </Store >
 
   );
 }

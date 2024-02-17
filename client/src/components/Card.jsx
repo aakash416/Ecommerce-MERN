@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { CartData } from "../App"
+import { storeData } from "../Context/ContextStore"
 
 const Card = ({ product }) => {
-    const cart = useContext(CartData); //{cart,setCart}
+    const cart = useContext(storeData); //{cart,setCart}
 
     return (
         <div className="card m-2 p-2" style={{ width: "18rem" }}>

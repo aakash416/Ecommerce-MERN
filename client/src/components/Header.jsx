@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { CartData } from '../App';
+import { storeData } from "../Context/ContextStore"
 
 const Header = () => {
-    const storeData = useContext(CartData);
+    const store = useContext(storeData);
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary " data-bs-theme="dark">
             <div className="container-fluid  ms-lg-5 me-lg-5  ">
@@ -35,26 +35,42 @@ const Header = () => {
                     </form>
                     <ul className="navbar-nav  ms-auto mb-2 mb-lg-0 d-flex align-items-center" >
                         {
-                            !storeData.isLogin &&
-                            <li className="nav-item" onClick={() => storeData.setUser("user")} >
+                            !store.isLogin &&
+                            <li className="nav-item" onClick={() => store.setUser("user")} >
                                 <Link className="nav-link" to={"/login"}>
                                     Login
                                 </Link>
                             </li>
                         }
                         {
-                            !storeData.isLogin &&
-                            <li className="nav-item" onClick={() => storeData.setUser("user")} >
+                            !store.isLogin &&
+                            <li className="nav-item" onClick={() => store.setUser("user")} >
                                 <Link className="nav-link" to={"/register"}  >
                                     Register
                                 </Link>
 
                             </li>
                         }
+                        {
+                            store.isLogin &&
+                            <li className="nav-item"  >
+                                <Link className="nav-link" to={"/profile"} >
+                                    <img className='rounded-circle' style={{ width: "40px", height: "40px" }} src={store.userData.image} alt={store.userData.firstName} />
+                                </Link>
+                            </li>
+                        }
+                        {
+                            store.isLogin &&
+                            <li className="nav-item"  >
+                                <Link className="nav-link" to={"/profile"} >
+                                    Hi, {store.userData.firstName}
+                                </Link>
+                            </li>
+                        }
 
                         {
-                            storeData.isLogin &&
-                            <li className="nav-item" onClick={() => storeData.setIsLogin(false)} >
+                            store.isLogin &&
+                            <li className="nav-item" onClick={() => store.setIsLogin(false)} >
                                 <Link className="nav-link" to={"/login"}>
                                     Logout
                                 </Link>
@@ -62,7 +78,7 @@ const Header = () => {
                         }
                         <li className="nav-item position-relative">
                             <Link className="nav-link" to={"/cart"}>
-                                <span className='position-absolute  bg-warning  p-1 fs-6 rounded-pill text-dark'>{storeData.cart.length !== 0 ? storeData.cart.length : <></>}</span>
+                                <span className='position-absolute  bg-warning  p-1 fs-6 rounded-pill text-dark'>{store.cart?.length !== 0 ? storeData.cart.length : <></>}</span>
                                 <i className="bi bi-cart fs-2 "></i>
                             </Link>
                         </li>
@@ -77,12 +93,12 @@ const Header = () => {
                                 Became a Seller
                             </Link>
                             <ul className="dropdown-menu">
-                                <li onClick={() => storeData.setUser("seller")}>
+                                <li onClick={() => store.setUser("seller")}>
                                     <Link className="dropdown-item" to={"/login"}>
                                         Login
                                     </Link>
                                 </li>
-                                <li onClick={() => storeData.setUser("seller")}>
+                                <li onClick={() => store.setUser("seller")}>
                                     <Link className="dropdown-item" to={"/register"}>
                                         Register
                                     </Link>

@@ -3,18 +3,21 @@ import Input from '../components/Input'
 import { login } from '../service/AuthService'
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { CartData } from '../App';
+import { storeData } from "../Context/ContextStore"
 
 const Login = () => {
     const navgater = useNavigate();
     const [data, setData] = useState({ email: "", password: "" });
-    const storeData = useContext(CartData);
+    const store = useContext(storeData);
 
     const handleSubmit = (e) => {
         e.preventDefault()
         login(data).then((res) => {
+            console.log(res.data);
+            store.setToken(res.data.token);
+            store.setUserData(res.data.existingProfile);
             toast.success(res.data.message);
-            storeData.setIsLogin(true);
+            store.setIsLogin(true);
             navgater("/");
         }).catch((err) => {
             toast.error(err.response.data.message);
