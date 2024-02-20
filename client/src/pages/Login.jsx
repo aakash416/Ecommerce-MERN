@@ -13,7 +13,6 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         login(data).then((res) => {
-            console.log(res.data);
             store.setToken(res.data.token);
             store.setUserData(res.data.existingProfile);
             toast.success(res.data.message);

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Card from '../components/Card'
 import { getAllProduct } from '../service/AuthService'
+import Carousel from '../components/Carousel'
 
 const Home = () => {
     const [products, setProducts] = useState([])
@@ -14,13 +15,19 @@ const Home = () => {
 
 
     return (
-        <div className='container mt-2 d-flex flex-wrap'>
-            {
-                products.map(product => {
-                    return <Card key={product._id} product={product} />
-                })
-            }
+
+        <div className='container'>
+            <Carousel />
+            <h1>Product</h1>
+            <div className='mt-2 d-flex flex-wrap'>
+                {
+                    products.map(product => {
+                        return <Card key={product._id} product={product} />
+                    })
+                }
+            </div>
         </div>
+
     )
 }
 

@@ -36,3 +36,4 @@ const getProductById = async (req, res) => {
 
 export { addProduct, getAllProduct, getProductById };
 
+

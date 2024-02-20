@@ -78,7 +78,7 @@ const Header = () => {
                         }
                         <li className="nav-item position-relative">
                             <Link className="nav-link" to={"/cart"}>
-                                <span className='position-absolute  bg-warning  p-1 fs-6 rounded-pill text-dark'>{store.cart?.length !== 0 ? storeData.cart.length : <></>}</span>
+                                <span className='position-absolute  bg-warning  p-1 fs-6 rounded-pill text-dark'>{store.cart?.length !== 0 ? storeData.cart?.length : <></>}</span>
                                 <i className="bi bi-cart fs-2 "></i>
                             </Link>
                         </li>

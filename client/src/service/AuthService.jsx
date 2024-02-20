@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const API = "http://localhost:8000";
+axios.defaults.withCredentials = true;
 
 const register = async (data) => {
     return await axios.post(`${API}/api/users/register`, data);
@@ -14,6 +15,15 @@ export const updatedprofile = async (data) => {
     return await axios.put(`${API}/api/users/update`, data);
 }
 
+
+
+export const addProductToCart = async (data) => {
+    return await axios.put(`${API}/api/cart/add`, data);
+}
+
+export const getAllProductInCart = async (id) => {
+    return await axios.get(`${API}/api/cart/all/${id}`);
+}
 
 
 const addProduct = async (data) => {

@@ -43,6 +43,21 @@ const userLogin = async (req, res) => {
             return res.status(401).json({ message: "Invalid email or password" });
         }
         const token = jwt.sign({ _id: existingProfile._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+
+
+
+        const accessToken = jwt.sign({ email: email },
+            "jwt-access-token-secret-key", { expiresIn: '1m' })
+        const refreshToken = jwt.sign({ email: email },
+            "jwt-refresh-token-secret-key", { expiresIn: '5m' })
+
+        res.cookie('accessToken', accessToken, { maxAge: 60000 })
+
+        res.cookie('refreshToken', refreshToken,
+            { maxAge: 300000, httpOnly: true, secure: true, sameSite: 'strict' })
+
+
+
         return res.status(200).json({ token, existingProfile, message: "Login successful" });
 
     }
@@ -87,5 +102,8 @@ const updateProfile = async (req, res) => {
     }
 
 }
+
+
+
 
 export { userRegister, userLogin, updateProfile };

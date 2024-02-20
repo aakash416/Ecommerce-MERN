@@ -1,9 +1,18 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { storeData } from "../Context/ContextStore"
+import { addProductToCart } from '../service/AuthService';
+import { toast } from 'react-toastify';
 
 const Card = ({ product }) => {
-    const cart = useContext(storeData); //{cart,setCart}
+    const store = useContext(storeData);
+    const addTocart = () => {
+        addProductToCart({ productId: product._id, token: store.token }).then(res => {
+            toast.success(res.data.message);
+        }).catch(err => {
+            toast.error(err.response.data.message);
+        })
+    }
 
     return (
         <div className="card m-2 p-2" style={{ width: "18rem" }}>
@@ -16,7 +25,7 @@ const Card = ({ product }) => {
                     </p>
                 </div>
             </Link>
-            <button className='btn btn-warning m-1' onClick={() => cart.setCart([...cart.cart, product])}>Add to Cart</button>
+            <button className='btn btn-warning m-1' onClick={addTocart}>Add to Cart</button>
             <button className='btn btn-success m-1'>Buy Now</button>
         </div>
     )
