@@ -1,17 +1,22 @@
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
-import { storeData } from "../Context/ContextStore"
+import React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { ContextStore } from "../Context/ContextStore"
 import { addProductToCart } from '../service/AuthService';
 import { toast } from 'react-toastify';
 
 const Card = ({ product }) => {
-    const store = useContext(storeData);
+    const { checkoutProduct, setCheckoutProduct } = ContextStore();
+    const navagater = useNavigate();
     const addTocart = () => {
-        addProductToCart({ productId: product._id, token: store.token }).then(res => {
+        addProductToCart({ productId: product._id }).then(res => {
             toast.success(res.data.message);
         }).catch(err => {
             toast.error(err.response.data.message);
         })
+    }
+    const checkout = () => {
+        setCheckoutProduct([...checkoutProduct, product]);
+        navagater("/checkout")
     }
 
     return (
@@ -26,7 +31,8 @@ const Card = ({ product }) => {
                 </div>
             </Link>
             <button className='btn btn-warning m-1' onClick={addTocart}>Add to Cart</button>
-            <button className='btn btn-success m-1'>Buy Now</button>
+            <button className='btn btn-success m-1' onClick={checkout}>Buy Now</button>
+
         </div>
     )
 }

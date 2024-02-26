@@ -1,6 +1,19 @@
 import React from 'react'
+import { removeProductItemById } from '../service/AuthService';
+import { toast } from 'react-toastify';
 
-const CartProduct = ({ product, index }) => {
+
+const CartProduct = ({ item, index, setCartData }) => {
+    const { product, quantity } = item;
+    const handelDelete = (id) => {
+        removeProductItemById({ _id: id }).then(res => {
+            setCartData(res.data?.productsInCart)
+            toast.success("Product Removed Successfully")
+        }).catch(err => {
+            console.log(err)
+        })
+    }
+
     return (
         <tr >
             <th scope="row">{index + 1}</th>
@@ -13,13 +26,13 @@ const CartProduct = ({ product, index }) => {
             </td>
             <td >
                 <button className="btn btn-light">-</button>
-                <button className="btn btn-info">data</button>
+                <button className="btn btn-info">{quantity}</button>
                 <button className="btn btn-light">+</button>
             </td>
             <td>
-                <button className="btn btn-danger">Remove</button>
+                <button className="btn btn-danger" onClick={() => handelDelete(product._id)}>Remove</button>
             </td>
-            <td> Price: ${product.price}</td>
+            <td> Price: ${quantity * product.price}</td>
         </tr>
     )
 }

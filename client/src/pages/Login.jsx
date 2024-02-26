@@ -1,22 +1,23 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import Input from '../components/Input'
 import { login } from '../service/AuthService'
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { storeData } from "../Context/ContextStore"
+import { ContextStore } from "../Context/ContextStore"
 
 const Login = () => {
     const navgater = useNavigate();
     const [data, setData] = useState({ email: "", password: "" });
-    const store = useContext(storeData);
+    const { setUserData, setToken } = ContextStore();
 
     const handleSubmit = (e) => {
         e.preventDefault()
         login(data).then((res) => {
-            store.setToken(res.data.token);
-            store.setUserData(res.data.existingProfile);
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("user", JSON.stringify(res.data.existingProfile));
+            setUserData(res.data.existingProfile);
+            setToken(res.data.token);
             toast.success(res.data.message);
-            store.setIsLogin(true);
             navgater("/");
         }).catch((err) => {
             toast.error(err.response.data.message);

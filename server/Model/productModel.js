@@ -20,7 +20,6 @@ const productSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        required: true
     },
     countInStock: {
         type: Number,
@@ -28,13 +27,15 @@ const productSchema = new mongoose.Schema({
     },
     rating: {
         type: Number,
-        required: true
     },
     numReviews: {
         type: Number,
-        required: true
     },
-
+    seller: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "profiles",
+        required: true
+    }
 
 },
     {

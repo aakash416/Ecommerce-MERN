@@ -9,12 +9,15 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Dashboard from './pages/Dashboard';
-import AddProduct from './pages/AddProduct';
+import AddProduct from './pages/seller/AddProduct';
 import ProductDetails from './pages/ProductDetails';
-import Cart from './pages/Cart';
+import Cart from './pages/user/Cart';
 import { Store } from './Context/ContextStore'
 import Profile from './pages/Profile';
 import UpdatedProfile from './pages/UpdatedProfile';
+import SeeAllProduct from './pages/seller/SeeAllProduct';
+import UpdateProduct from './pages/seller/UpdateProduct';
+import Checkout from './pages/user/Checkout';
 
 function App() {
   return (
@@ -29,9 +32,12 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/updatedprofile" element={<UpdatedProfile />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/add" element={<AddProduct />} />
           <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path='/addNewProduct' element={<AddProduct />} />
+          <Route path='/allProduct' element={<SeeAllProduct />} />
+          <Route path='/updateproduct/:id' element={<UpdateProduct />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>

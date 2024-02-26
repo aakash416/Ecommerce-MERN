@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react'
-import { storeData } from '../Context/ContextStore';
+import React, { useState } from 'react'
+import { ContextStore } from '../Context/ContextStore';
 import Input from '../components/Input';
 import { updatedprofile } from '../service/AuthService';
 import { useNavigate } from 'react-router-dom';
@@ -7,18 +7,18 @@ import { toast } from 'react-toastify';
 
 const UpdatedProfile = () => {
     const navgater = useNavigate();
-    const store = useContext(storeData);
-    const [data, setData] = useState({ ...store.userData, password: "", token: store.token });
+    const { setUserData, userData, token, setToken } = ContextStore();
+    const [data, setData] = useState({ ...userData, password: "", "token": token });
 
     const handleSubmit = (e) => {
         e.preventDefault()
         updatedprofile(data).then((res) => {
-            store.setUserData(res.data.updated);
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("user", JSON.stringify(res.data.updated));
+            setToken(res.data.token);
+            setUserData(res.data.updated);
             toast.success(res.data.message);
-            store.setIsLogin(true);
-            store.setToken(res.data.token);
             navgater("/profile");
-
         }).catch((err) => {
             toast.error(err.response.data.message);
         })
