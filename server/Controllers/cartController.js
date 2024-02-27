@@ -48,6 +48,7 @@ export const getAllProductInCart = async (req, res) => {
             return res.status(200).json({ message: "Cart is empty" });
         }
         const existingCartItems = user.items;
+
         const productsPromises = existingCartItems.map(async item => {
             const product = await Product.findById({ _id: item.productId });
             return {
@@ -68,22 +69,28 @@ export const getAllProductInCart = async (req, res) => {
 
 export const removeProductItemById = async (req, res) => {
     try {
-        const productId = req.body._id;
-        const existingProfile = await Profile.findOne({ _id: req.id });
-        if (!existingProfile) {
-            return res.status(401).json({ message: "Invalid email or password" });
+        const user = await CartModel.findOne({ userId: req.id });
+        if (!user) {
+            return res.status(200).json({ message: "Cart is empty" });
         }
-        const token = jwt.sign({ _id: existingProfile._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
-        const updatedProfile = await Profile.findByIdAndUpdate(req.id, {
-            $pull: {
-                cart: productId
+        const existingCartItems = user.items;
+        const index = existingCartItems.findIndex(item => item.productId.toString() === req.params.id);
+        if (index === -1) {
+            return res.status(200).json({ message: "Product not found in cart" });
+        }
+        existingCartItems.splice(index, 1);
+        await user.save();
+
+        const productsPromises = existingCartItems.map(async item => {
+            const product = await Product.findById({ _id: item.productId });
+            return {
+                product: product,
+                quantity: item.quantity
             }
-        }, { new: true });
-
-        const productIds = updatedProfile.cart;
-        const productsInCart = await Product.find({ _id: { $in: productIds } });
-        return res.status(200).json({ token, productsInCart, message: "Product removed successfully" });
+        });
+        const products = await Promise.all(productsPromises);
+        return res.status(200).json({ products, message: "Products retrieved successfully" });
     }
     catch (error) {
         console.log(error);
@@ -91,4 +98,89 @@ export const removeProductItemById = async (req, res) => {
     }
 
 
+}
+
+
+
+export const decreamentProductInCart = async (req, res) => {
+    try {
+        const user = await CartModel.findOne({ userId: req.id });
+        if (!user) {
+            return res.status(200).json({ message: "Cart is empty" });
+        }
+
+        const existingCartItems = user.items;
+
+        const index = existingCartItems.findIndex(item => item.productId.toString() === req.body.id);
+        if (index === -1) {
+            return res.status(200).json({ message: "Product not found in cart" });
+        }
+
+        if (existingCartItems[index].quantity === 1) {
+            existingCartItems.splice(index, 1);
+            await user.save();
+
+            const productsPromises = existingCartItems.map(async item => {
+                const product = await Product.findById({ _id: item.productId });
+                return {
+                    product: product,
+                    quantity: item.quantity
+                }
+            });
+            const products = await Promise.all(productsPromises);
+            return res.status(200).json({ products, message: "Products retrieved successfully" });
+        }
+
+        existingCartItems[index].quantity -= 1;
+        await user.save();
+
+        const productsPromises = existingCartItems.map(async item => {
+            const product = await Product.findById({ _id: item.productId });
+            return {
+                product: product,
+                quantity: item.quantity
+            }
+        });
+        const products = await Promise.all(productsPromises);
+        return res.status(200).json({ products, message: "Products retrieved successfully" });
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Something went wrong" });
+    }
+}
+
+export const increamentProductInCart = async (req, res) => {
+    try {
+        const user = await CartModel.findOne({ userId: req.id });
+        if (!user) {
+            return res.status(200).json({ message: "Cart is empty" });
+        }
+
+        const existingCartItems = user.items;
+
+        const index = existingCartItems.findIndex(item => item.productId.toString() === req.body.id);
+
+        if (index === -1) {
+            return res.status(200).json({ message: "Product not found in cart" });
+        }
+
+        existingCartItems[index].quantity += 1;
+        await user.save();
+
+        const productsPromises = existingCartItems.map(async item => {
+            const product = await Product.findById({ _id: item.productId });
+            return {
+                product: product,
+                quantity: item.quantity
+            }
+        });
+        const products = await Promise.all(productsPromises);
+        return res.status(200).json({ products, message: "Products retrieved successfully" });
+
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Something went wrong" });
+    }
 }

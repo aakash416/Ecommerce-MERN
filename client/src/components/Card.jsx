@@ -15,7 +15,11 @@ const Card = ({ product }) => {
         })
     }
     const checkout = () => {
-        setCheckoutProduct([...checkoutProduct, product]);
+        addProductToCart({ productId: product._id }).then(res => {
+            toast.success(res.data.message);
+        }).catch(err => {
+            toast.error(err.response.data.message);
+        })
         navagater("/checkout")
     }
 

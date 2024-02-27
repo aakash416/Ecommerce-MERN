@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ContextStore } from '../../Context/ContextStore'
+import { getAllProductInCart } from '../../service/AuthService';
 
 const Checkout = () => {
-    const { checkoutProduct } = ContextStore();
+    const { cart, setCart } = ContextStore();
+    useEffect(() => {
+        getAllProductInCart().then(res => {
+            setCart(res.data.products)
+        }).catch(err => {
+            console.log(err)
+        })
+    }, [setCart]);
+
 
 
     return (
@@ -10,7 +19,8 @@ const Checkout = () => {
             <div className="card">
                 <div className="card-header">Order Summary</div>
                 {
-                    checkoutProduct.map((product, index) => {
+                    cart.map((item, index) => {
+                        const { product, quantity } = item;
                         return (
                             <div className='card-body d-flex ' key={index}>
                                 <img className='m-4' src={product?.image} alt={product?.name} style={{ width: "80px", height: "80px" }} />
@@ -19,8 +29,9 @@ const Checkout = () => {
                                     <p className="card-text">
                                         {product.description}
                                     </p>
+                                    <p>Quantity : {quantity}</p>
                                     <h4 className="card-text">
-                                        Price: {product.price}
+                                        Price: {quantity * product.price}
                                     </h4>
                                 </div>
 
@@ -29,7 +40,8 @@ const Checkout = () => {
                     })
                 }
             </div>
-            <h4>Total Price: {checkoutProduct.reduce((a, b) => a + b.price, 0)}</h4>
+
+            <h4>Total Price: {cart?.reduce((a, b) => a + (b.product.price * b.quantity), 0)}</h4>
             <button type="button" className="btn btn-warning">Pay Now</button>
 
         </div>

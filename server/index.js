@@ -1,6 +1,5 @@
 import 'dotenv/config'
 import express from 'express'
-import mongoose from 'mongoose';
 import cors from 'cors';
 import userRouter from './Routes/userRoutes.js'
 import sellerRouter from './Routes/sellerRoutes.js';

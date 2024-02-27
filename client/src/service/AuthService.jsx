@@ -26,7 +26,14 @@ export const getAllProductInCart = async () => {
 }
 
 export const removeProductItemById = async (id) => {
-    return await axios.put(`${API}/api/cart/remove`, id, { headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` } });
+    return await axios.delete(`${API}/api/cart/remove/${id}`, { headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` } });
+}
+
+export const decreamentProductInCart = async (id) => {
+    return await axios.put(`${API}/api/cart/decreament`, { id }, { headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` } });
+}
+export const increamentProductInCart = async (id) => {
+    return await axios.put(`${API}/api/cart/increament`, { id }, { headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` } });
 }
 
 

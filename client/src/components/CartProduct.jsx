@@ -1,17 +1,36 @@
 import React from 'react'
-import { removeProductItemById } from '../service/AuthService';
+import { removeProductItemById, decreamentProductInCart, increamentProductInCart } from '../service/AuthService';
 import { toast } from 'react-toastify';
 
 
-const CartProduct = ({ item, index, setCartData }) => {
+const CartProduct = ({ item, index, setCart }) => {
     const { product, quantity } = item;
     const handelDelete = (id) => {
-        removeProductItemById({ _id: id }).then(res => {
-            setCartData(res.data?.productsInCart)
+        removeProductItemById(id).then(res => {
+            setCart(res.data?.products)
             toast.success("Product Removed Successfully")
         }).catch(err => {
             console.log(err)
         })
+    }
+
+    const hadelDecreament = (id) => {
+        decreamentProductInCart(id).then(res => {
+            setCart(res.data?.products)
+            toast.error("Product Decreament Successfully")
+        }).catch(err => {
+            console.log(err)
+        })
+
+    }
+    const handleIncreament = (id) => {
+        increamentProductInCart(id).then(res => {
+            setCart(res.data?.products)
+            toast.success("Product Increament Successfully")
+        }).catch(err => {
+            console.log(err)
+        })
+
     }
 
     return (
@@ -25,9 +44,9 @@ const CartProduct = ({ item, index, setCartData }) => {
                 {product.description}
             </td>
             <td >
-                <button className="btn btn-light">-</button>
+                <button className="btn btn-light" onClick={() => hadelDecreament(product._id)}>-</button>
                 <button className="btn btn-info">{quantity}</button>
-                <button className="btn btn-light">+</button>
+                <button className="btn btn-light" onClick={() => handleIncreament(product._id)}>+</button>
             </td>
             <td>
                 <button className="btn btn-danger" onClick={() => handelDelete(product._id)}>Remove</button>

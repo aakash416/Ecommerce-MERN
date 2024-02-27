@@ -13,7 +13,7 @@ const Cart = () => {
         }).catch(err => {
             console.log(err)
         })
-    }, [userData?._id, setCart]);
+    }, [setCart]);
 
 
     return (
@@ -37,7 +37,7 @@ const Cart = () => {
 
                                     {
                                         cart.map((item, index) => {
-                                            return <CartProduct key={index} item={item} index={index} setCartData={setCart} />
+                                            return <CartProduct key={index} item={item} index={index} setCart={setCart} />
                                         })
                                     }
                                     <tr>
@@ -46,11 +46,14 @@ const Cart = () => {
                                         <th scope="col">Total Amount</th>
                                         <th scope="col"></th>
                                         <th scope="col"></th>
-                                        <th scope="col">${cart.reduce((a, b) => a + b.product.price, 0)}</th>
+                                        <th scope="col">${cart?.reduce((a, b) => a + (b.product.price * b.quantity), 0)}</th>
                                     </tr>
 
                                 </tbody>
                             </table>
+                            <Link to="/checkout">
+                                <button className='btn btn-warning'>Checkout</button>
+                            </Link>
                         </> :
                             <div className='container d-flex justify-content-center align-items-center vh-100' >
                                 <div className="card text-center">
@@ -82,6 +85,7 @@ const Cart = () => {
                         </div>
                     </div>
             }
+
         </div>
     )
 }
