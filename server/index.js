@@ -5,6 +5,7 @@ import userRouter from './Routes/userRoutes.js'
 import sellerRouter from './Routes/sellerRoutes.js';
 import productRouter from './Routes/productRouter.js';
 import cartRouter from './Routes/cartRouter.js';
+import paymentRouter from './Routes/paymentRouter.js';
 import cookieParser from 'cookie-parser';
 import connectDB from './Config/DB.js';
 import errorHandler from './Middleware/errorMiddleware.js'
@@ -28,6 +29,7 @@ app.use('/api/users', userRouter)
 app.use('/api/sellers', sellerRouter)
 app.use('/api/product', productRouter)
 app.use('/api/cart', cartRouter)
+app.use('/api/payment', paymentRouter)
 
 app.use(errorHandler);
 

@@ -75,4 +75,26 @@ export const getAllProductData = async () => {
     return await axios.get(`${API}/api/product/alldata`, { headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` } });
 }
 
+
+
+
+
+// Payments
+
+export const createOrder = async (data) => {
+    return await axios.post(`${API}/api/payment/creaate`, data, {
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    });
+}
+
+
+export const verifyPayment = async (data) => {
+    return await axios.post(`${API}/api/payment/verify`, data, {
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    });
+}
 export { register, login, getAllProduct, getProductById };
