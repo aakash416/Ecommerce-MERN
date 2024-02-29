@@ -12,7 +12,7 @@ export const createOrder = async (req, res) => {
             key_secret: process.env.RAZORPAY_KEY_SECRET
         });
         const options = {
-            amount: req.body.amount * 100,
+            amount: createPament.amount,
             currency: "INR",
             receipt: createPament._id
         };
@@ -31,15 +31,26 @@ export const createOrder = async (req, res) => {
 }
 
 
+export const getKey = async (req, res) => {
+    try {
+        return res.status(200).json({ key_id: process.env.RAZORPAY_KEY_ID });
+
+    } catch (error) {
+        console.error("Error getting razorpay key:", error);
+        res.status(500).json({ message: "Something went wrong", error: error.message });
+    }
+}
 
 export const verifyPayment = async (req, res) => {
     try {
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
         const payment = await PaymentModel.findOne({ orderId: razorpay_order_id });
+
         if (!payment) {
             return res.status(400).json({ message: "Payment not found" });
         }
+
         const instance = new Razorpay({
             key_id: process.env.RAZORPAY_KEY_ID,
             key_secret: process.env.RAZORPAY_KEY_SECRET
@@ -57,6 +68,8 @@ export const verifyPayment = async (req, res) => {
         const expectedSignature = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
             .update(body)
             .digest('hex');
+
+
         if (expectedSignature === razorpay_signature) {
             payment.paymentId = razorpay_payment_id;
             payment.signature = razorpay_signature;

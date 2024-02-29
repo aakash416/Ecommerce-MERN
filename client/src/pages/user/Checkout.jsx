@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react'
 import { ContextStore } from '../../Context/ContextStore'
-import { getAllProductInCart, createOrder, verifyPayment } from '../../service/AuthService';
+import { getAllProductInCart, createOrder, getKey, verifyPayment } from '../../service/AuthService';
 import { toast } from 'react-toastify';
-// import Razorpay from 'razorpay';
-
 const Checkout = () => {
     const { userData, cart, setCart } = ContextStore();
     useEffect(() => {
@@ -15,51 +13,42 @@ const Checkout = () => {
     }, [setCart]);
     const totalAmount = cart?.reduce((a, b) => a + (b.product.price * b.quantity), 0)
 
-    // Load the Razorpay script
-    useEffect(() => {
-        const script = document.createElement('script');
-        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-        script.async = true;
-        document.body.appendChild(script);
-    }, []);
-
     const handlePayNow = async () => {
-        createOrder({ amount: totalAmount }).then(res => {
-            
-            const options = {
-                "key": "rzp_test_B38LGrNB4kp4G9", // Enter the Key ID generated from the Dashboard
-                "amount": totalAmount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-                "currency": "INR",
-                "name": "Acme Corp",
-                "description": "Test Transaction",
-                "image": "https://example.com/your_logo",
-                "order_id": res.data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-                "handler": function (response) {
-                    verifyPayment(response).then(res => {
-                        toast.success(res.data.message);
-                    }).catch(err => {
-                        toast.error(err.response.data.message);
-                    })
-                },
-                "prefill": {
-                    "name": "Gaurav Kumar",
-                    "email": "gaurav.kumar@example.com",
-                    "contact": "9000090000"
-                },
-                "notes": {
-                    "address": "Razorpay Corporate Office"
-                },
-                "theme": {
-                    "color": "#3399cc"
-                }
-            };
 
-            const paymentObject = new window.Razorpay(options);
-            paymentObject.open();
+        const { data: { id, amount } } = await createOrder({ amount: totalAmount });
 
-        }).catch(err => {
-            console.log(err)
-        })
+        const { data: { key_id } } = await getKey();
+
+        const options = {
+            "key": key_id,
+            "amount": amount,
+            "currency": "INR",
+            "name": "Ecommerce",
+            "description": "E-commerce is the online buying and selling of goods and services, facilitated by the transfer of money and information over the Internet.",
+            "image": "https://cdn-icons-png.flaticon.com/512/8539/8539259.png",
+            "order_id": id,
+            "handler": function (response) {
+                verifyPayment(response).then(res => {
+                    toast.success(res.data.message);
+                }).catch(err => {
+                    toast.error(err.response.data.message);
+                })
+            },
+            "prefill": {
+                "name": userData.firstName,
+                "email": userData.email,
+                "contact": userData.phone
+            },
+            "notes": {
+                "address": "E-commerce Corporate Office Pvt Ltd"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+
+        const result = new window.Razorpay(options);
+        result.open();
     }
 
     return (
@@ -97,5 +86,4 @@ const Checkout = () => {
 }
 
 export default Checkout
-
 

@@ -1,11 +1,9 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { ContextStore } from "../Context/ContextStore"
 import { addProductToCart } from '../service/AuthService';
 import { toast } from 'react-toastify';
 
 const Card = ({ product }) => {
-    const { checkoutProduct, setCheckoutProduct } = ContextStore();
     const navagater = useNavigate();
     const addTocart = () => {
         addProductToCart({ productId: product._id }).then(res => {

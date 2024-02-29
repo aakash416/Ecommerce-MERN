@@ -89,6 +89,14 @@ export const createOrder = async (data) => {
     });
 }
 
+export const getKey = async () => {
+    return await axios.get(`${API}/api/payment/getKey`, {
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+        }
+    });
+}
+
 
 export const verifyPayment = async (data) => {
     return await axios.post(`${API}/api/payment/verify`, data, {
