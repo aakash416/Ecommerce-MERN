@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "http://localhost:8000";
+const API = "https://ecommerce-mern-pj58.onrender.com";
 axios.defaults.withCredentials = true;
 
 const register = async (data) => {
