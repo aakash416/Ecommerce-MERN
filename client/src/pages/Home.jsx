@@ -6,13 +6,10 @@ import Carousel from '../components/Carousel'
 const Home = () => {
     const [products, setProducts] = useState([])
     useEffect(() => {
-        getAllProduct().then(res => {
-            setProducts(res.data.products)
-        }).catch(err => {
+        getAllProduct().then((res) => setProducts(res.data.products)).catch(err => {
             console.log(err)
         })
     }, []);
-
 
     return (
 
@@ -21,8 +18,8 @@ const Home = () => {
             <h1>Product</h1>
             <div className='mt-2 d-flex flex-wrap'>
                 {
-                    products.map(product => {
-                        return <Card key={product._id} product={product} />
+                    products.map((product, index) => {
+                        return <Card key={index} product={product} />
                     })
                 }
             </div>

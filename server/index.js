@@ -24,6 +24,10 @@ app.use(cors({
     credentials: true
 }))
 
+app.get("/", (req, res) => {
+    return res.status(200).json("Hi this is E-commerce Pojects")
+})
+
 
 app.use('/api/users', userRouter)
 app.use('/api/sellers', sellerRouter)
@@ -34,5 +38,6 @@ app.use('/api/payment', paymentRouter)
 app.use(errorHandler);
 
 app.listen(process.env.PORT, () => { console.log(`Server is running on port ${process.env.PORT}`) })
+
 
 

@@ -6,7 +6,7 @@ export const tokenVerify = async (req, res, next) => {
     if (!token)
         return res.status(401).json({ message: "Please try to login" });
     try {
-        const decoded = await Jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = Jwt.verify(token, process.env.JWT_SECRET);
         req.id = decoded._id;
         next();
     }
