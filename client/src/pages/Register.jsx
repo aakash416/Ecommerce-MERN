@@ -13,7 +13,6 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(data)
         register(data).then((res) => {
             toast.success(res.data.message);
             navgater("/login");
