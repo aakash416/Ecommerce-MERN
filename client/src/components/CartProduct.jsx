@@ -1,5 +1,5 @@
 import React from 'react'
-import { removeProductItemById, decreamentProductInCart, increamentProductInCart } from '../service/AuthService';
+import { removeProductItemById, decreamentProductInCart, increamentProductInCart } from '../api';
 import { toast } from 'react-toastify';
 
 

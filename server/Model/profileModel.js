@@ -43,10 +43,6 @@ const profileSchema = new mongoose.Schema({
     image: {
         type: String,
     },
-    cart: {
-        type: Array,
-        default: []
-    }
 }, { timestamps: true });
 
 const Profile = mongoose.model("Profile", profileSchema);

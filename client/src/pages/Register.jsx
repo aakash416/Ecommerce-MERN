@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import Input from '../components/Input'
-import { register } from '../service/AuthService'
+import { register } from '../api'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { storeData } from "../Context/ContextStore"

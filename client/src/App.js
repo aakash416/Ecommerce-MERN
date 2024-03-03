@@ -18,6 +18,9 @@ import UpdatedProfile from './pages/UpdatedProfile';
 import SeeAllProduct from './pages/seller/SeeAllProduct';
 import UpdateProduct from './pages/seller/UpdateProduct';
 import Checkout from './pages/user/Checkout';
+import AllUsers from './pages/Dashboard/Pages/AllUsers';
+import AllSeller from './pages/Dashboard/Pages/AllSeller';
+import AllProducts from './pages/Dashboard/Pages/AllProducts';
 
 function App() {
   return (
@@ -33,7 +36,12 @@ function App() {
           <Route path="/updatedprofile" element={<UpdatedProfile />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} >
+            <Route index element={<AllUsers />} />
+            <Route path="/dashboard/all-users" element={<AllUsers />} />
+            <Route path="/dashboard/all-seller" element={<AllSeller />} />
+            <Route path="/dashboard/all-products" element={<AllProducts />} />
+          </Route>
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path='/addNewProduct' element={<AddProduct />} />
           <Route path='/allProduct' element={<SeeAllProduct />} />

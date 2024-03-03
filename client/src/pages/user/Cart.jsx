@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import CartProduct from '../../components/CartProduct';
 import { ContextStore } from "../../Context/ContextStore"
-import { getAllProductInCart } from '../../service/AuthService';
+import { getAllProductInCart } from '../../api';
 import { Link } from 'react-router-dom';
 
 

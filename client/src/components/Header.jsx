@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { ContextStore } from "../Context/ContextStore"
+import logo from "../assets/logo.png"
 
 const Header = () => {
 
@@ -16,7 +17,7 @@ const Header = () => {
         <nav className="navbar navbar-expand-lg bg-body-tertiary " data-bs-theme="dark">
             <div className="container-fluid  ms-lg-5 me-lg-5  ">
                 <Link className="navbar-brand" to={"/"}>
-                    Ecommerce
+                    <img src={logo} alt="Get In Bag" style={{ height: "50px" }} />
                 </Link>
                 <button
                     className="navbar-toggler"

@@ -6,6 +6,7 @@ import sellerRouter from './Routes/sellerRoutes.js';
 import productRouter from './Routes/productRouter.js';
 import cartRouter from './Routes/cartRouter.js';
 import paymentRouter from './Routes/paymentRouter.js';
+import adminRouter from "./Routes/adminRouter.js"
 import cookieParser from 'cookie-parser';
 import connectDB from './Config/DB.js';
 import errorHandler from './Middleware/errorMiddleware.js'
@@ -21,8 +22,8 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }))
 
 const corsOptions = {
-    origin: 'https://ecommerce-mern-iota.vercel.app', // Replace this with the requesting origin or a function to dynamically set it
-    credentials: true, // To allow cookies and HTTP authentication
+    origin: process.env.ORIGIN,
+    credentials: true,
 };
 
 app.use(cors(corsOptions))
@@ -37,6 +38,7 @@ app.use('/api/sellers', sellerRouter)
 app.use('/api/product', productRouter)
 app.use('/api/cart', cartRouter)
 app.use('/api/payment', paymentRouter)
+app.use('/api/admin', adminRouter)
 
 app.use(errorHandler);
 

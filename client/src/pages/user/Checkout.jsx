@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { ContextStore } from '../../Context/ContextStore'
-import { getAllProductInCart, createOrder, getKey, verifyPayment } from '../../service/AuthService';
+import { getAllProductInCart, createOrder, getKey, verifyPayment } from '../../api';
 import { toast } from 'react-toastify';
 const Checkout = () => {
     const { userData, cart, setCart } = ContextStore();

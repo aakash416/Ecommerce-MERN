@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ProductForm from '../../components/ProductForm'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getProductById, updatedProductById } from '../../service/AuthService'
+import { getProductById, updatedProductById } from '../../api'
 import { toast } from 'react-toastify'
 
 const UpdateProduct = () => {

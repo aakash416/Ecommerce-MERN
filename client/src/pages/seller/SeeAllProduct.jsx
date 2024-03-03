@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ProductList from '../../components/ProductList'
 import { ContextStore } from '../../Context/ContextStore';
-import { getAllProductSeller } from '../../service/AuthService';
+import { getAllProductSeller } from '../../api';
 
 const SeeAllProduct = () => {
 

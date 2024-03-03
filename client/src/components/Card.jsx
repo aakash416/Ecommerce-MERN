@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { addProductToCart } from '../service/AuthService';
+import { addProductToCart } from '../api';
 import { toast } from 'react-toastify';
 
 const Card = ({ product }) => {

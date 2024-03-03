@@ -35,6 +35,15 @@ const productSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "profiles",
         required: true
+    },
+    status: {
+        type: String,
+        enum: ["available", "unavailable"],
+        default: "available",
+    },
+    isApproved: {
+        type: Boolean,
+        default: false
     }
 
 },

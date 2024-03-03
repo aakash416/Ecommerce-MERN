@@ -1,12 +1,12 @@
 import Profile from '../Model/profileModel.js';
 
-export const isSeller = async (req, res, next) => {
+export const isAdmin = async (req, res, next) => {
     try {
         const user = await Profile.findOne({ _id: req.id });
         if (!user) {
             return res.status(404).json({ message: 'Profile not found' });
         }
-        if (user.role !== 'seller' || user.role !== 'admin') {
+        if (user.role !== 'admin') {
             return res.status(403).json({ message: 'You are not authorized to perform this action' });
         }
         next();

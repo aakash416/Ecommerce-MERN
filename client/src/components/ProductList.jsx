@@ -1,6 +1,6 @@
 import React from 'react'
 import { toast } from 'react-toastify'
-import { removeProductSellerById } from '../service/AuthService'
+import { removeProductSellerById } from '../api'
 import { Link } from 'react-router-dom'
 
 const ProductList = ({ product, index, setProudct }) => {

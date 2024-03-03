@@ -1,36 +1,67 @@
-const User = require('../models/userModel');
-const Product = require('../models/productModel');
+import Profile from "../Model/profileModel.js";
 
-// View all users
-exports.viewAllUsers = async (req, res) => {
+export const viewAllUsers = async (req, res) => {
     try {
-        const users = await User.find({});
-        res.json(users);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        const users = await Profile.find({ role: "user" });
+        return res.status(200).json({ users, message: "Users retrieved successfully" });
     }
-};
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Something went wrong" });
+    }
+}
 
-// View all products (including moderation)
-exports.viewAllProducts = async (req, res) => {
+export const viewSingleUser = async (req, res) => {
     try {
-        const products = await Product.find({});
-        res.json(products);
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        const user = await Profile.findById(req.params.id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        return res.status(200).json({ user, message: "User retrieved successfully" });
     }
-};
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Something went wrong" });
+    }
+}
 
-// Moderate a product listing
-exports.moderateProduct = async (req, res) => {
+export const updateUser = async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id);
-        // Implement moderation logic, e.g., approve or reject a product listing
-        res.json({ msg: 'Product moderated' });
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        const user = await Profile.findById(req.params.id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        const updatedUser = await Profile.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        return res.status(200).json({ updatedUser, message: "User updated successfully" });
     }
-};
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Something went wrong" });
+    }
+}
+
+export const deleteUser = async (req, res) => {
+    try {
+        const user = await Profile.findById(req.params.id);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        await user.remove();
+        return res.status(200).json({ message: "User deleted successfully" });
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Something went wrong" });
+    }
+}
+
+export const viewAllSellers = async (req, res) => {
+    try {
+        const sellers = await Profile.find({ role: "seller" });
+        return res.status(200).json({ sellers, message: "Sellers retrieved successfully" });
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Something went wrong" });
+    }
+}

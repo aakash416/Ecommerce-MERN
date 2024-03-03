@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { ContextStore } from '../Context/ContextStore';
 import Input from '../components/Input';
-import { updatedprofile } from '../service/AuthService';
+import { updatedprofile } from '../api';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 

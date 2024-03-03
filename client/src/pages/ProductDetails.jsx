@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getProductById } from '../service/AuthService';
+import { getProductById } from '../api';
 
 const ProductDetails = () => {
     const [product, setProduct] = useState([])

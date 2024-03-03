@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Input from '../components/Input'
-import { login } from '../service/AuthService'
+import { login } from '../api'
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { ContextStore } from "../Context/ContextStore"
@@ -18,6 +18,10 @@ const Login = () => {
             setUserData(res.data.existingProfile);
             setToken(res.data.token);
             toast.success(res.data.message);
+            console.log(res.data.existingProfile.role);
+            if (res.data.existingProfile.role === "admin") {
+                return navgater("/dashboard");
+            }
             navgater("/");
         }).catch((err) => {
             toast.error(err.response.data.message);

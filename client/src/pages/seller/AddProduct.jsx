@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { addProduct } from '../../service/AuthService';
+import { addProduct } from '../../api';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { ContextStore } from '../../Context/ContextStore';

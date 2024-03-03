@@ -1,8 +1,11 @@
 import React from 'react'
+import error from "../assets/error404.gif"
 
 const Error = () => {
     return (
-        <div>Error 404</div>
+        <div className='container'>
+            <img className="card-img-top p-5" src={error} alt="Error 404" />
+        </div>
     )
 }
 

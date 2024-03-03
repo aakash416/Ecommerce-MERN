@@ -2,7 +2,7 @@ import Jwt from "jsonwebtoken";
 
 
 export const tokenVerify = async (req, res, next) => {
-    const token = await req.header('Authorization').replace('Bearer ', '');
+    const token = await req.header('Authorization').replace('Bearer', '');
     if (!token)
         return res.status(401).json({ message: "Please try to login" });
     try {
