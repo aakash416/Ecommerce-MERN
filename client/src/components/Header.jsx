@@ -89,25 +89,35 @@ const Header = () => {
                 </Link>
               </li>
             )}
-
             {userData && (
               <li className="nav-item">
-                <Link className="nav-link" to={"/profile"}>
-                  <img
-                    className="rounded-circle"
-                    style={{ width: "40px", height: "40px" }}
-                    src={userData.image}
-                    alt={userData.firstName}
-                  />
-                </Link>
+                <img
+                  className="rounded-circle"
+                  style={{ width: "40px", height: "40px" }}
+                  src={userData.image}
+                  alt={userData.firstName}
+                />
               </li>
             )}
             {userData && (
-              <li className="nav-item">
-                <Link className="nav-link" to={"/profile"}>
+              <div className="nav-item dropdown">
+                <div
+                  className="nav-link dropdown-toggle"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
                   Hi, {userData.firstName}
-                </Link>
-              </li>
+                </div>
+
+                <ul className="dropdown-menu">
+                  <li>
+                    <Link className="dropdown-item" to={"/profile"}>
+                      Your Profile
+                    </Link>
+                  </li>
+                </ul>
+              </div>
             )}
 
             {userData && (
