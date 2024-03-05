@@ -2,7 +2,14 @@ import Profile from "../Model/profileModel.js";
 
 export const viewAllUsers = async (req, res) => {
     try {
-        const users = await Profile.find({ role: "user" });
+        const userProfiles = await Profile.find({ role: "user" }).lean();
+        const users = userProfiles.map(user => {
+            const { password, ...data } = user;
+            return data;
+        })
+        if (!users.length) {
+            return res.status(404).json({ message: "No users found" });
+        }
         return res.status(200).json({ users, message: "Users retrieved successfully" });
     }
     catch (error) {

@@ -1,6 +1,17 @@
 import React from 'react'
+import EditProfileButton from './EditProfileButton'
+import { deleteUser } from '../../../api/admin'
 
 const TableBody = ({ index, data }) => {
+
+    const handleDelete = (id) => {
+        deleteUser(id).then((res) => {
+            console.log(res)
+        }).catch((err) => {
+            console.log(err.response.data.message)
+        })
+
+    }
     return (
         <tr >
             <th scope="row">{index + 1}</th>
@@ -13,10 +24,12 @@ const TableBody = ({ index, data }) => {
             <td>{data?.phone}</td>
             <td>{data?.gender}</td>
             <td>{data?.address}</td>
-            <td><button className='btn btn-warning'> Edit</button></td>
-            <td><button className="btn btn-danger" > Delete</button></td>
-
+            <td>
+                <EditProfileButton data={data} />
+            </td>
+            <td><button className="btn btn-danger" onClick={() => handleDelete(data._id)}> Delete</button></td>
         </tr>
+
     )
 }
 

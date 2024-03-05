@@ -61,7 +61,7 @@ const AllUsers = () => {
                     </thead>
                     <tbody className="table-group-divider">
 
-                        {users.map((user, index) => <TableBody key={index} data={user} index={index} />)}
+                        {users.map((user, index) => <TableBody key={index} data={user} index={index} setUsers={setUsers} />)}
 
                     </tbody>
                 </table>
