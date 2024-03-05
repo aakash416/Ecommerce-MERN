@@ -139,27 +139,10 @@ const Header = () => {
             )}
 
             {!userData && (
-              <li className="nav-item dropdown">
-                <Link
-                  className="nav-link dropdown-toggle"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Became a Seller
+              <li className="nav-item" onClick={() => setUser("seller")}>
+                <Link className="nav-link" to={"/register"}>
+                  Become a Seller
                 </Link>
-                <ul className="dropdown-menu">
-                  <li onClick={() => setUser("seller")}>
-                    <Link className="dropdown-item" to={"/login"}>
-                      Login
-                    </Link>
-                  </li>
-                  <li onClick={() => setUser("seller")}>
-                    <Link className="dropdown-item" to={"/register"}>
-                      Register
-                    </Link>
-                  </li>
-                </ul>
               </li>
             )}
           </ul>
