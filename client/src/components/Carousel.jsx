@@ -10,7 +10,7 @@ const Carousel = () => {
       <div className="carousel-inner">
         <div className="carousel-item active">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBYRMNmBhWZl6HPZWnC8YAhIDkcDpkNdGqgw&usqp=CAU"
+            src="https://sitegalleria.com/wp-content/uploads/2020/05/friday-blog.jpg"
             className="d-block w-100"
             alt="..."
           />
