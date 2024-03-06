@@ -10,7 +10,7 @@ const Carousel = () => {
       <div className="carousel-inner">
         <div className="carousel-item active">
           <img
-            src="https://assets-global.website-files.com/5e0f6315ca8431ed8cb1cf73/5e1cf59a0bbd5b796d60f820_driftrock-facebook-carousel-ads.png"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBYRMNmBhWZl6HPZWnC8YAhIDkcDpkNdGqgw&usqp=CAU"
             className="d-block w-100"
             alt="..."
           />
