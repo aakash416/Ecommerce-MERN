@@ -17,7 +17,7 @@ const Carousel = () => {
         </div>
         <div className="carousel-item">
           <img
-            src="https://www.shutterstock.com/image-photo/happy-byer-shopping-bags-standing-600nw-1927526819.jpg"
+            src="https://www.searchenginejournal.com/wp-content/uploads/2022/08/google-shopping-ads-6304dccb7a49e-sej.png"
             className="d-block w-100"
             alt="..."
           />
