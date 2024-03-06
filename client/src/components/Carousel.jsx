@@ -17,7 +17,7 @@ const Carousel = () => {
         </div>
         <div className="carousel-item">
           <img
-            src="https://www.searchenginejournal.com/wp-content/uploads/2022/08/google-shopping-ads-6304dccb7a49e-sej.png"
+            src="https://d8it4huxumps7.cloudfront.net/uploads/images/flipkart-grid-01.jpg?d=1920x418"
             className="d-block w-100"
             alt="..."
           />
