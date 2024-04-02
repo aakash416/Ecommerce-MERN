@@ -34,6 +34,9 @@ const Register = () => {
       setIsLoading(false);
     }
   };
+
+ 
+
   return (
     <div className="container mt-5">
       <h1>Create Account</h1>
@@ -104,6 +107,7 @@ const Register = () => {
           value={data.address}
           setInput={setData}
         />
+
         {loading ? (
           <button className="btn btn-primary" type="button" disabled>
             <span
@@ -132,6 +136,8 @@ const Register = () => {
             Register
           </button>
         )}
+
+
         {error && (
           <div className="alert alert-danger mt-3" role="alert">
             {error}

@@ -63,7 +63,11 @@ const Login = () => {
             <span role="status">Login</span>
           </button>
         ) : (
-          <button type="submit" className="btn btn-primary mt-3">
+          <button
+            type="submit"
+            className="btn btn-primary mt-3"
+            disabled={!(data.email && data.password)}
+          >
             Login
           </button>
         )}
