@@ -26,7 +26,7 @@ const Register = () => {
     try {
       setIsLoading(true);
       const res = await register(data);
-      toast.success(res.data?.message);
+      toast.success(res?.data?.message);
       navgater("/login");
     } catch (err) {
       setError(err.response.data?.message);
@@ -35,30 +35,7 @@ const Register = () => {
     }
   };
 
-  const isDisabled = () => {
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      phone,
-      address,
-      gender,
-      image,
-    } = data;
-    return (
-      !(
-        firstName &&
-        lastName &&
-        email &&
-        password &&
-        phone &&
-        address &&
-        gender &&
-        image
-      ) || loading
-    );
-  };
+ 
 
   return (
     <div className="container mt-5">
@@ -131,23 +108,36 @@ const Register = () => {
           setInput={setData}
         />
 
-        <button
-          type="submit"
-          className="btn btn-primary mt-3"
-          disabled={isDisabled()}
-        >
-          {loading ? (
-            <>
-              <span
-                className="spinner-border spinner-border-sm"
-                aria-hidden="true"
-              ></span>
-              <span className="visually-hidden">Registering...</span>
-            </>
-          ) : (
-            "Register"
-          )}
-        </button>
+        {loading ? (
+          <button className="btn btn-primary" type="button" disabled>
+            <span
+              className="spinner-border spinner-border-sm"
+              aria-hidden="true"
+            ></span>
+            <span role="status">Register</span>
+          </button>
+        ) : (
+          <button
+            type="submit"
+            className="btn btn-primary mt-3"
+            disabled={
+              !(
+                data?.firstName &&
+                data?.lastName &&
+                data?.email &&
+                data?.password &&
+                data?.image &&
+                data?.address &&
+                data?.gender &&
+                data?.phone
+              )
+            }
+          >
+            Register
+          </button>
+        )}
+
+
         {error && (
           <div className="alert alert-danger mt-3" role="alert">
             {error}
