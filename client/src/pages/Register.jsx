@@ -26,7 +26,7 @@ const Register = () => {
     try {
       setIsLoading(true);
       const res = await register(data);
-      toast.success(res.data?.message);
+      toast.success(res?.data?.message);
       navgater("/login");
     } catch (err) {
       setError(err.response.data?.message);
@@ -105,7 +105,7 @@ const Register = () => {
           setInput={setData}
         />
         {loading ? (
-          <button className="btn btn-primary" type="button">
+          <button className="btn btn-primary" type="button" disabled>
             <span
               className="spinner-border spinner-border-sm"
               aria-hidden="true"
@@ -113,7 +113,22 @@ const Register = () => {
             <span role="status">Register</span>
           </button>
         ) : (
-          <button type="submit" className="btn btn-primary mt-3">
+          <button
+            type="submit"
+            className="btn btn-primary mt-3"
+            disabled={
+              !(
+                data?.firstName &&
+                data?.lastName &&
+                data?.email &&
+                data?.password &&
+                data?.image &&
+                data?.address &&
+                data?.gender &&
+                data?.phone
+              )
+            }
+          >
             Register
           </button>
         )}
