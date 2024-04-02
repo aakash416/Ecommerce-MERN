@@ -34,6 +34,32 @@ const Register = () => {
       setIsLoading(false);
     }
   };
+
+  const isDisabled = () => {
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+      phone,
+      address,
+      gender,
+      image,
+    } = data;
+    return (
+      !(
+        firstName &&
+        lastName &&
+        email &&
+        password &&
+        phone &&
+        address &&
+        gender &&
+        image
+      ) || loading
+    );
+  };
+
   return (
     <div className="container mt-5">
       <h1>Create Account</h1>
@@ -104,19 +130,24 @@ const Register = () => {
           value={data.address}
           setInput={setData}
         />
-        {loading ? (
-          <button className="btn btn-primary" type="button">
-            <span
-              className="spinner-border spinner-border-sm"
-              aria-hidden="true"
-            ></span>
-            <span role="status">Register</span>
-          </button>
-        ) : (
-          <button type="submit" className="btn btn-primary mt-3">
-            Register
-          </button>
-        )}
+
+        <button
+          type="submit"
+          className="btn btn-primary mt-3"
+          disabled={isDisabled()}
+        >
+          {loading ? (
+            <>
+              <span
+                className="spinner-border spinner-border-sm"
+                aria-hidden="true"
+              ></span>
+              <span className="visually-hidden">Registering...</span>
+            </>
+          ) : (
+            "Register"
+          )}
+        </button>
         {error && (
           <div className="alert alert-danger mt-3" role="alert">
             {error}
