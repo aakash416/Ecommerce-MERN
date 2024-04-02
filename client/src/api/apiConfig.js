@@ -15,9 +15,9 @@ export const API_BASE_URL = "https://ecommerce-mern-pj58.onrender.com/api";
  * Sets the base URL, enables credentials, and adds the authorization header.
  */
 export const axiosInstance = axios.create({
-    baseURL: API_BASE_URL,
-    withCredentials: true,
-    headers: {
-        Authorization: `Bearer${localStorage.getItem("token")}`,
-    },
+  baseURL: API_BASE_URL,
+  withCredentials: true,
+  headers: {
+    Authorization: `Bearer${localStorage.getItem("token")}`,
+  },
 });
